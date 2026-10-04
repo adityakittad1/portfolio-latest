@@ -50,10 +50,7 @@ export default function AdminSettings() {
       const { error } = await supabase.from('site_settings').upsert(settings);
       
       if (error) {
-        // Fallback to local storage for ANY error (RLS, schema missing, etc)
-        localStorage.setItem('site_settings', JSON.stringify(settings));
-        setSuccess(true);
-        setTimeout(() => setSuccess(false), 3000);
+        throw new Error(error.message || 'Failed to save to database. Image might be too large.');
       } else {
         localStorage.setItem('site_settings', JSON.stringify(settings));
         setSuccess(true);
@@ -170,6 +167,24 @@ export default function AdminSettings() {
                   style={{
                     background: 'var(--color-bg-tertiary)',
                     padding: '8px 12px',
+                    borderRadius: '8px',
+                    color: 'white',
+                    border: '1px solid var(--color-border)',
+                    flex: 1
+                  }}
+                />
+              </div>
+              <div style={{ marginTop: '12px' }}>
+                <div style={{ color: 'var(--color-text-secondary)', fontSize: '14px', marginBottom: '8px' }}>Or paste an Image URL directly:</div>
+                <input 
+                  type="text" 
+                  value={settings.profile_photo_url || ''}
+                  onChange={(e) => setSettings({...settings, profile_photo_url: e.target.value})}
+                  placeholder="https://example.com/my-photo.jpg"
+                  style={{
+                    width: '100%',
+                    background: 'var(--color-bg-tertiary)',
+                    padding: '10px 12px',
                     borderRadius: '8px',
                     color: 'white',
                     border: '1px solid var(--color-border)'
