@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, FolderKanban, Briefcase, Award, 
   Code2, GraduationCap, Clock, Image as ImageIcon, 
-  Settings, LogOut, Menu, X 
+  Settings, LogOut, Menu, X, Loader2
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { supabase } from '../../lib/supabase';
 
 const navItems = [
   { path: '/admin', icon: LayoutDashboard, label: 'Dashboard', end: true },
@@ -21,12 +22,45 @@ const navItems = [
 
 export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [session, setSession] = useState(null);
   const navigate = useNavigate();
 
-  // Mock logout for now
-  const handleLogout = () => {
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setLoading(false);
+      if (!session) {
+        navigate('/admin/login');
+      }
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+      if (!session) {
+        navigate('/admin/login');
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [navigate]);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
     navigate('/admin/login');
   };
+
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', background: 'var(--color-bg)' }}>
+        <Loader2 className="animate-spin" size={32} color="var(--color-primary)" />
+      </div>
+    );
+  }
+
+  if (!session) return null;
 
   return (
     <div className="admin-layout">
