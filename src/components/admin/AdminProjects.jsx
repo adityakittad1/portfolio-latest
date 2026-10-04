@@ -62,6 +62,7 @@ export default function AdminProjects() {
     const techArray = formData.technologies.split(',').map(t => t.trim()).filter(Boolean);
     const payload = {
       ...formData,
+      displayOrder: Number(formData.displayOrder) || 1,
       technologies: techArray,
       published: String(formData.published) === 'true' || formData.published === true
     };
@@ -204,6 +205,25 @@ export default function AdminProjects() {
                         <option value={true}>Published</option>
                         <option value={false}>Draft</option>
                       </select>
+                    </div>
+                  </div>
+
+                  <div className="form-group" style={{ background: 'var(--color-bg-tertiary)', padding: '16px', borderRadius: '8px', border: '1px solid var(--color-border)' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                      <label className="form-label" style={{ margin: 0 }}>Priority / Display Order</label>
+                      <span style={{ fontWeight: 'bold', color: 'var(--color-primary)' }}>{formData.displayOrder || 1}</span>
+                    </div>
+                    <input 
+                      type="range" 
+                      name="displayOrder" 
+                      min="1" 
+                      max="20" 
+                      value={formData.displayOrder || 1} 
+                      onChange={handleChange} 
+                      style={{ width: '100%', accentColor: 'var(--color-primary)' }}
+                    />
+                    <div style={{ fontSize: '12px', color: 'var(--color-text-secondary)', marginTop: '4px' }}>
+                      Lower numbers appear first (e.g. 1 is highest priority). Use this bar to sort projects.
                     </div>
                   </div>
 

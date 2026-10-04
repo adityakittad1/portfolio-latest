@@ -11,7 +11,7 @@ export default function ProjectDetailPage() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const { projects, loading } = usePortfolioData();
-  const project = projects.find(p => p.slug === slug);
+  const project = projects.find(p => p.slug === slug || p.id === slug);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -57,7 +57,7 @@ export default function ProjectDetailPage() {
             <motion.div variants={fadeInUp} style={{ marginBottom: 'var(--space-10)' }}>
               <div className="project-visual" style={{ minHeight: '400px', backgroundColor: 'var(--color-bg-elevated)' }}>
                 <div className="project-visual-placeholder">
-                  <span>PROJECT / {project.slug.toUpperCase()}</span>
+                  <span>PROJECT / {(project.slug || slug || '').toUpperCase()}</span>
                   <span>HERO ASSET PENDING</span>
                 </div>
               </div>
@@ -119,7 +119,7 @@ export default function ProjectDetailPage() {
                 <motion.div className="project-detail-sidebar-card" variants={fadeInUp}>
                   <h4>Technologies</h4>
                   <div className="project-tech-tags" style={{ marginBottom: 0 }}>
-                    {project.technologies.map(tech => (
+                    {(project.technologies || []).map(tech => (
                       <span key={tech} className="project-tech-tag">{tech}</span>
                     ))}
                   </div>

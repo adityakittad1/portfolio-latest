@@ -42,16 +42,16 @@ export default function FeaturedProjects() {
                   <p className="project-summary">{project.shortDescription}</p>
 
                   <div className="project-tech-tags">
-                    {project.technologies.slice(0, 5).map(tech => (
+                    {(project.technologies || []).slice(0, 5).map(tech => (
                       <span key={tech} className="project-tech-tag">{tech}</span>
                     ))}
-                    {project.technologies.length > 5 && (
-                      <span className="project-tech-tag">+{project.technologies.length - 5} more</span>
+                    {(project.technologies || []).length > 5 && (
+                      <span className="project-tech-tag">+{(project.technologies || []).length - 5} more</span>
                     )}
                   </div>
 
                   <div className="project-links">
-                    <Link to={`/projects/${project.slug}`} className="btn btn-primary btn-sm">
+                    <Link to={`/projects/${project.slug || project.id}`} className="btn btn-primary btn-sm">
                       View Case Study
                       <ArrowUpRight size={16} />
                     </Link>
@@ -71,7 +71,7 @@ export default function FeaturedProjects() {
                 {/* For the visual placeholder, we can use an image if available, else a styled block */}
                 <div className="project-visual">
                   <div className="project-visual-placeholder">
-                    <span>PROJECT / {project.slug.toUpperCase()}</span>
+                    <span>PROJECT / {(project.slug || '').toUpperCase()}</span>
                     <span>VISUAL ASSET PENDING</span>
                   </div>
                 </div>

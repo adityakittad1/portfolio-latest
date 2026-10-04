@@ -92,7 +92,7 @@ export default function TechStack() {
                     </h3>
                   )}
                   <div className="stack-grid">
-                    {category.skills.map((skill, i) => {
+                    {(category.skills || []).map((skill, i) => {
                       const Icon = iconComponents[skill.icon] || Code;
                       return (
                         <motion.div

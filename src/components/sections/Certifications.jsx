@@ -43,11 +43,11 @@ export default function Certifications() {
                 {cert.issueDate && <div className="cert-date">Issued: {cert.issueDate}</div>}
 
                 <div className="cert-skills">
-                  {cert.skills.slice(0, 3).map(skill => (
+                  {(cert.skills || []).slice(0, 3).map(skill => (
                     <span key={skill} className="badge badge-neutral">{skill}</span>
                   ))}
-                  {cert.skills.length > 3 && (
-                    <span className="badge badge-neutral">+{cert.skills.length - 3}</span>
+                  {(cert.skills || []).length > 3 && (
+                    <span className="badge badge-neutral">+{(cert.skills || []).length - 3}</span>
                   )}
                 </div>
               </motion.div>
@@ -83,7 +83,7 @@ export default function Certifications() {
               <div style={{ marginBottom: 'var(--space-6)' }}>
                 <h4 style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-muted)', marginBottom: 'var(--space-3)' }}>SKILLS DEMONSTRATED</h4>
                 <div className="cert-skills">
-                  {selectedCert.skills.map(skill => (
+                  {(selectedCert.skills || []).map(skill => (
                     <span key={skill} className="badge badge-neutral">{skill}</span>
                   ))}
                 </div>
