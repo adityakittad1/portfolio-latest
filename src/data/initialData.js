@@ -282,6 +282,20 @@ export const certificationsData = [
     published: true,
   },
   {
+    id: '8',
+    title: 'Red Hat Certified Developer in Cloud-native Applications',
+    issuer: 'Red Hat',
+    issueDate: 'October 09, 2026',
+    credentialId: '260-101-852',
+    verificationUrl: 'https://www.credly.com/badges/2ced2ded-de1e-4917-8275-4755b87e08d1',
+    certificateImageUrl: null,
+    description: 'Certification validating skills in designing and building cloud-native applications for Red Hat platforms.',
+    skills: ['Cloud-native', 'Red Hat', 'Application Development', 'Containers'],
+    featured: true,
+    displayOrder: 1,
+    published: true,
+  },
+  {
     id: '2',
     title: 'Oracle Cloud Infrastructure Foundations Associate',
     issuer: 'Oracle',
@@ -603,6 +617,7 @@ export const terminalCommands = {
   type 'explore my work' or scroll to projects section`,
   certs: `certifications:
   → rhcsa — red hat enterprise linux 10
+  → red hat certified developer in cloud-native applications
   → oci foundations associate — oracle
   → oracle ai foundations associate
   → tata cybersecurity analyst — forage
